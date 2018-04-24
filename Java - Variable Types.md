@@ -77,3 +77,20 @@ public class Employee {
 - 默认值与实例变量相同。对于数字，默认值为0;对于布尔来说，是false;对于对象引用，是Null。值可以在声明期间或在构造函数中分配。此外，可以在特殊的静态初始化块中分配值。
 - 通过调用类名称`ClassName.VariableName`可以访问静态变量。
 - **将类变量声明为`public static final`时，变量名称（常量）全部大写。如果静态变量不是public和final，则命名语法与实例和局部变量相同**。
+- 示例：
+```java
+import java.io.*;
+public class Employee {
+
+   // salary  variable is a private static variable
+   private static double salary;
+
+   // DEPARTMENT is a constant
+   public static final String DEPARTMENT = "Development ";
+
+   public static void main(String args[]) {
+      salary = 1000;
+      System.out.println(DEPARTMENT + "average salary:" + salary);
+   }
+}
+```
