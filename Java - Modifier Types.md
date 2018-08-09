@@ -181,3 +181,72 @@ public final class Test {
 - 抽象类永远不能实例化。如果一个类被声明为抽象的，那么唯一的目的是扩展这个类。
 - 一个类不能既抽象又final（因为final的类不能被扩展）。如果一个类包含抽象方法，那么该类应该被声明为抽象的。否则，将会抛出一个编译错误。
 - 抽象类可能包含抽象方法和普通方法。
+
+```java
+abstract class Caravan {
+   private double price;
+   private String model;
+   private String year;
+   public abstract void goFast();   // an abstract method
+   public abstract void changeColor();
+}
+```
+3.2抽象方法
+- 抽象方法是一种没有任何实现声明的方法。方法体（实现）由子类提供。
+- 抽象方法永远不可能是`final`或`strict（严格）`类型的。
+- 任何继承抽象类的类都必须实现父类的所有抽象方法，除非子类也是一个抽象类。
+- 如果一个类包含一个或多个抽象方法，那么该类必须声明为抽象。抽象类不需要包含抽象方法。
+- **抽象方法以分号结尾**。例如：`public abstract sample（）;`
+- 示例：
+
+```java
+public abstract class SuperClass {
+   abstract void m();   // abstract method
+}
+
+class SubClass extends SuperClass {
+   // implements the abstract method
+   void m() {
+      .........
+   }
+}
+```
+3.3同步修饰符
+- `synchronized`关键字用于指示某个方法一次只能由一个线程访问。**同步修饰符可以与四种访问级别修饰符中的任何一种一起应用**。
+
+```java
+public synchronized void showDetails() {
+   .......
+}
+```
+3.4瞬态修改器
+- 一个实例变量被标记为`transient`以指示JVM在序列化包含它的对象时，跳过该变量。
+- 该修饰符包含在创建变量的语句中，**位于变量的类或数据类型之前**。
+
+```java
+public transient int limit = 55;   // will not persist
+public int b;   // will persist
+```
+3.5volatile修饰符
+- volatile修饰符用于让JVM知道访问变量的线程必须始终将自己变量的私有副本与内存中的主副本合并。
+- 访问一个volatile变量会同步主内存中所有缓存的变量副本。
+- volatile只能应用于实例变量，它们是对象类型或私有类型。
+- volatile对象引用可以为null。
+
+```java
+public class MyRunnable implements Runnable {
+   private volatile boolean active;
+
+   public void run() {
+      active = true;
+      while (active) {   // line 1
+         // some code here
+      }
+   }
+
+   public void stop() {
+      active = false;   // line 2
+   }
+}
+```
+- 通常，在一个线程（您使用`Runnable`开始的线程）中调用`run（）`，并从另一个线程调用`stop（）`。如果在`line 1`中使用了`active`的缓存值，则在`line 2`中将`active`设置为`false`时，循环可能不会停止。这就是想要使用`volatile`的原因。
